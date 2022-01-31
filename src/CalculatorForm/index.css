@@ -1,0 +1,12 @@
+.form-cal {
+  display: flex;
+  flex-direction: column;
+
+  width: 500px;
+}
+
+.cal-form-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
