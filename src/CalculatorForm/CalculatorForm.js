@@ -77,6 +77,9 @@ export default class CalculatorForm extends Component {
         const newDateToArray = dateObject.setDate(dateObject.getDate() + 30);
 
         const newDate = new Date(newDateToArray);
+
+        console.log("Hello Date", newDateToArray);
+
         const paymentMonth = newDate.toLocaleString("en-US", {
           month: "numeric",
         });
@@ -195,12 +198,6 @@ export default class CalculatorForm extends Component {
                 InputProps={{ name: "startDate" }}
                 onChange={this.onChange}
                 value={this.state.startDate}
-                style={{
-                  width: 300,
-                  color: "secondary",
-                  borderColor: "white",
-                  backgroundColor: "#8052f3",
-                }}
               />
 
               <CssTextField
@@ -210,16 +207,12 @@ export default class CalculatorForm extends Component {
                 InputProps={{ name: "loanAmount" }}
                 onChange={this.onChange}
                 value={this.state.loanAmount}
-                style={{
-                  width: 300,
-                }}
               />
-              <FormControl variant="standard" sx={{ m: 1, minWidth: 180 }}>
+              <FormControl variant="standard" sx={{ m: 1 }}>
                 <CssTextField
                   id="custom-css-outlined-input"
                   labelId="demo-simple-select-label"
                   select
-                  style={{ width: 300 }}
                   variant="standard"
                   InputProps={{ name: "installmentInterval" }}
                   onChange={this.onChange}
@@ -240,7 +233,6 @@ export default class CalculatorForm extends Component {
                 InputProps={{ name: "installmentAmount" }}
                 onChange={this.onChange}
                 value={this.state.installmentAmount}
-                style={{ width: 300 }}
                 color="primary"
               />
 
@@ -251,7 +243,6 @@ export default class CalculatorForm extends Component {
                 InputProps={{ name: "interestRate" }}
                 onChange={this.onChange}
                 value={this.state.interestRate}
-                style={{ width: 300 }}
               />
               <button className="submit-button" onClick={this.calculatePayment}>
                 Calculate
