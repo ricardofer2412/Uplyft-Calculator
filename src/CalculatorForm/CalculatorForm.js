@@ -21,6 +21,7 @@ export default class CalculatorForm extends Component {
     installmentAmount: "",
     interestRate: "",
     paymentList: [],
+    lastPaymentDate: "",
   };
 
   calculatePayment = (e) => {
@@ -31,7 +32,7 @@ export default class CalculatorForm extends Component {
     let dateMilli = newDate;
 
     const dateObject = new Date(dateMilli);
-    console.log("Date milli", dateObject);
+    console.log("Interval", this.state.installmentInterval);
 
     let paymentDatesList = [];
 
@@ -47,7 +48,7 @@ export default class CalculatorForm extends Component {
 
     let paymentsNumber = totalAmount / installmentAmount;
 
-    let installmentInterval = "monthly";
+    let installmentInterval = this.state.installmentInterval;
 
     if (installmentInterval === "monthly") {
       for (let i = 0; i < paymentsNumber; i++) {
@@ -76,12 +77,82 @@ export default class CalculatorForm extends Component {
       this.setState({
         paymentList: paymentDatesList,
       });
+    } else if (installmentInterval === "weekly") {
+      for (let i = 0; i < paymentsNumber; i++) {
+        const newDateToArray = dateObject.setDate(dateObject.getDate() + 7);
+
+        const newDate = new Date(newDateToArray);
+        const paymentMonth = newDate.toLocaleString("en-US", {
+          month: "numeric",
+        });
+        const paymentDay = newDate.toLocaleString("en-US", {
+          day: "numeric",
+        });
+        const paymentYear = newDate.toLocaleString("en-US", {
+          year: "numeric",
+        });
+        let payment = {
+          paymentNumber: i + 1,
+          amount: installmentAmount,
+          paymentDate: `${paymentMonth}/${paymentDay}/${paymentYear}`,
+        };
+
+        paymentDatesList.push(payment);
+      }
+
+      console.log(paymentDatesList);
+      this.setState({
+        paymentList: paymentDatesList,
+      });
+    } else if (installmentInterval === "daily") {
+      for (let i = 0; i < paymentsNumber; i++) {
+        const newDateToArray = dateObject.setDate(dateObject.getDate() + 1);
+
+        const newDate = new Date(newDateToArray);
+        const paymentMonth = newDate.toLocaleString("en-US", {
+          month: "numeric",
+        });
+        const paymentDay = newDate.toLocaleString("en-US", {
+          day: "numeric",
+        });
+        const paymentYear = newDate.toLocaleString("en-US", {
+          year: "numeric",
+        });
+        let payment = {
+          paymentNumber: i + 1,
+          amount: installmentAmount,
+          paymentDate: `${paymentMonth}/${paymentDay}/${paymentYear}`,
+        };
+
+        paymentDatesList.push(payment);
+      }
+
+      console.log(paymentDatesList);
+      this.setState({
+        paymentList: paymentDatesList,
+      });
+    } else {
+      console.log("not valid input");
     }
   };
   onChange = (e) => {
     const state = this.state;
     state[e.target.name] = e.target.value;
     this.setState(state);
+  };
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  clearData = () => {
+    this.setState = {
+      startDate: "",
+      loanAmount: "",
+      installmentInterval: "",
+      installmentAmount: "",
+      interestRate: "",
+      paymentList: [],
+    };
   };
 
   render() {
@@ -113,22 +184,24 @@ export default class CalculatorForm extends Component {
                 value={this.state.loanAmount}
               />
               <FormControl variant="standard" sx={{ m: 1, minWidth: 180 }}>
-                <InputLabel id="demo-simple-select-label">
+                {/* <InputLabel id="demo-simple-select-label">
                   Payment Interval
-                </InputLabel>
-                <Select
+                </InputLabel> */}
+                <TextField
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={this.state.installmentInterval}
-                  label="Age"
+                  select
                   variant="standard"
                   InputProps={{ name: "installmentInterval" }}
                   onChange={this.onChange}
+                  value={this.state.installmentInterval}
+                  margin="normal"
+                  label="Payment Interval"
                 >
                   <MenuItem value={"daily"}>Daily</MenuItem>
                   <MenuItem value={"weekly"}>Weekly</MenuItem>
                   <MenuItem value={"monthly"}>Monthly</MenuItem>
-                </Select>
+                </TextField>
               </FormControl>
 
               <TextField
@@ -151,7 +224,7 @@ export default class CalculatorForm extends Component {
               <button className="submit-button" onClick={this.calculatePayment}>
                 Calculate
               </button>
-              <button className="clear-button" onClick={this.calculatePayment}>
+              <button className="clear-button" onClick={this.clearData}>
                 Clear
               </button>
             </div>
