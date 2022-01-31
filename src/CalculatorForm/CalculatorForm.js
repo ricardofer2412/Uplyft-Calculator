@@ -9,8 +9,31 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import MenuItem from "@mui/material/MenuItem";
-
 import FormControl from "@mui/material/FormControl";
+import { alpha, styled } from "@mui/material/styles";
+
+const CssTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "white",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "white",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "white",
+    },
+    "&:hover fieldset": {
+      borderColor: "white",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "white",
+    },
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+  },
+});
 
 export default class CalculatorForm extends Component {
   state = {
@@ -161,9 +184,9 @@ export default class CalculatorForm extends Component {
           <h3>Payment Calculator</h3>
           <form>
             <div className="form-cal">
-              <TextField
-                id="datetime-local"
+              <CssTextField
                 label="Start Date"
+                id="custom-css-outlined-input"
                 type="date"
                 variant="standard"
                 InputLabelProps={{
@@ -172,24 +195,31 @@ export default class CalculatorForm extends Component {
                 InputProps={{ name: "startDate" }}
                 onChange={this.onChange}
                 value={this.state.startDate}
+                style={{
+                  width: 300,
+                  color: "secondary",
+                  borderColor: "white",
+                  backgroundColor: "#8052f3",
+                }}
               />
 
-              <TextField
-                id="standard-basic"
+              <CssTextField
+                id="custom-css-outlined-input"
                 label="Loan Amount"
                 variant="standard"
                 InputProps={{ name: "loanAmount" }}
                 onChange={this.onChange}
                 value={this.state.loanAmount}
+                style={{
+                  width: 300,
+                }}
               />
               <FormControl variant="standard" sx={{ m: 1, minWidth: 180 }}>
-                {/* <InputLabel id="demo-simple-select-label">
-                  Payment Interval
-                </InputLabel> */}
-                <TextField
+                <CssTextField
+                  id="custom-css-outlined-input"
                   labelId="demo-simple-select-label"
-                  id="demo-simple-select"
                   select
+                  style={{ width: 300 }}
                   variant="standard"
                   InputProps={{ name: "installmentInterval" }}
                   onChange={this.onChange}
@@ -200,25 +230,28 @@ export default class CalculatorForm extends Component {
                   <MenuItem value={"daily"}>Daily</MenuItem>
                   <MenuItem value={"weekly"}>Weekly</MenuItem>
                   <MenuItem value={"monthly"}>Monthly</MenuItem>
-                </TextField>
+                </CssTextField>
               </FormControl>
 
-              <TextField
-                id="standard-basic"
+              <CssTextField
+                id="custom-css-outlined-input"
                 label=" Installment Amount"
                 variant="standard"
                 InputProps={{ name: "installmentAmount" }}
                 onChange={this.onChange}
                 value={this.state.installmentAmount}
+                style={{ width: 300 }}
+                color="primary"
               />
 
-              <TextField
-                id="standard-basic"
+              <CssTextField
+                id="custom-css-outlined-input"
                 label="Interest Rate (%)"
                 variant="standard"
                 InputProps={{ name: "interestRate" }}
                 onChange={this.onChange}
                 value={this.state.interestRate}
+                style={{ width: 300 }}
               />
               <button className="submit-button" onClick={this.calculatePayment}>
                 Calculate
