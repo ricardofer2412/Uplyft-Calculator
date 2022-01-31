@@ -9,8 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
+
 import FormControl from "@mui/material/FormControl";
 
 export default class CalculatorForm extends Component {
@@ -50,7 +49,7 @@ export default class CalculatorForm extends Component {
 
     let installmentInterval = this.state.installmentInterval;
 
-    if (installmentInterval === "monthly") {
+    if (installmentInterval == "monthly") {
       for (let i = 0; i < paymentsNumber; i++) {
         const newDateToArray = dateObject.setDate(dateObject.getDate() + 30);
 
@@ -77,7 +76,7 @@ export default class CalculatorForm extends Component {
       this.setState({
         paymentList: paymentDatesList,
       });
-    } else if (installmentInterval === "weekly") {
+    } else if (installmentInterval == "weekly") {
       for (let i = 0; i < paymentsNumber; i++) {
         const newDateToArray = dateObject.setDate(dateObject.getDate() + 7);
 
@@ -104,7 +103,7 @@ export default class CalculatorForm extends Component {
       this.setState({
         paymentList: paymentDatesList,
       });
-    } else if (installmentInterval === "daily") {
+    } else if (installmentInterval == "daily") {
       for (let i = 0; i < paymentsNumber; i++) {
         const newDateToArray = dateObject.setDate(dateObject.getDate() + 1);
 
