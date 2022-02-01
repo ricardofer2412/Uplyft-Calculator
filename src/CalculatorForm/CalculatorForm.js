@@ -72,14 +72,18 @@ export default class CalculatorForm extends Component {
 
     let installmentInterval = this.state.installmentInterval;
 
-    if (installmentInterval == "monthly") {
+    if (installmentInterval === "monthly") {
       for (let i = 0; i < paymentsNumber; i++) {
         const newDateToArray = dateObject.setDate(dateObject.getDate() + 30);
-
         const newDate = new Date(newDateToArray);
-
-        console.log("Hello Date", newDateToArray);
-
+        if (newDate.getDay() == 6) {
+          newDate.setDate(newDate.getDate() + 2);
+          console.log("New Date", newDate);
+        }
+        if (newDate.getDay() == 0) {
+          newDate.setDate(newDate.getDate() + 1);
+          console.log("New Date", newDate);
+        }
         const paymentMonth = newDate.toLocaleString("en-US", {
           month: "numeric",
         });
@@ -102,11 +106,19 @@ export default class CalculatorForm extends Component {
       this.setState({
         paymentList: paymentDatesList,
       });
-    } else if (installmentInterval == "weekly") {
+    } else if (installmentInterval === "weekly") {
       for (let i = 0; i < paymentsNumber; i++) {
         const newDateToArray = dateObject.setDate(dateObject.getDate() + 7);
 
         const newDate = new Date(newDateToArray);
+        if (newDate.getDay() == 6) {
+          newDate.setDate(newDate.getDate() + 2);
+          console.log("New Date", newDate);
+        }
+        if (newDate.getDay() == 0) {
+          newDate.setDate(newDate.getDate() + 1);
+          console.log("New Date", newDate);
+        }
         const paymentMonth = newDate.toLocaleString("en-US", {
           month: "numeric",
         });
@@ -129,11 +141,19 @@ export default class CalculatorForm extends Component {
       this.setState({
         paymentList: paymentDatesList,
       });
-    } else if (installmentInterval == "daily") {
+    } else if (installmentInterval === "daily") {
       for (let i = 0; i < paymentsNumber; i++) {
         const newDateToArray = dateObject.setDate(dateObject.getDate() + 1);
 
         const newDate = new Date(newDateToArray);
+        if (newDate.getDay() == 6) {
+          newDate.setDate(newDate.getDate() + 2);
+          console.log("New Date", newDate);
+        }
+        if (newDate.getDay() == 0) {
+          newDate.setDate(newDate.getDate() + 1);
+          console.log("New Date", newDate);
+        }
         const paymentMonth = newDate.toLocaleString("en-US", {
           month: "numeric",
         });
