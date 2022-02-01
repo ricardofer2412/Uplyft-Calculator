@@ -35,6 +35,23 @@ const CssTextField = styled(TextField)({
   },
 });
 
+const holidays = {
+  "0,2,1": "Martin Luther King, Jr. Day",
+  "1,2,1": "President's Day",
+  "2,1,0": "Daylight Savings Time Begins",
+  "3,3,3": "Administrative Assistants Day",
+  "4,1,0": "Mother's Day",
+  "4,-1,1": "Memorial Day",
+  "5,2,0": "Father's Day",
+  "6,2,0": "Parents Day",
+  "8,0,1": "Labor Day",
+  "8,1,0": "Grandparents Day",
+  "8,-1,0": "Gold Star Mothers Day",
+  "9,1,1": "Columbus Day",
+  "10,0,0": "Daylight Savings Time Ends",
+  "10,3,4": "Thanksgiving Day",
+};
+
 export default class CalculatorForm extends Component {
   state = {
     startDate: "",
@@ -48,6 +65,8 @@ export default class CalculatorForm extends Component {
 
   calculatePayment = (e) => {
     e.preventDefault();
+
+    console.log(this.getDateString(2021, 4, -1, 1));
 
     let newDate = Date.parse(this.state.startDate);
 
@@ -76,6 +95,9 @@ export default class CalculatorForm extends Component {
       for (let i = 0; i < paymentsNumber; i++) {
         const newDateToArray = dateObject.setDate(dateObject.getDate() + 30);
         const newDate = new Date(newDateToArray);
+
+        console.log(this.getDateString(2021, 4, -1, 1));
+
         if (newDate.getDay() == 6) {
           newDate.setDate(newDate.getDate() + 2);
           console.log("New Date", newDate);
@@ -119,6 +141,7 @@ export default class CalculatorForm extends Component {
           newDate.setDate(newDate.getDate() + 1);
           console.log("New Date", newDate);
         }
+
         const paymentMonth = newDate.toLocaleString("en-US", {
           month: "numeric",
         });
@@ -128,6 +151,7 @@ export default class CalculatorForm extends Component {
         const paymentYear = newDate.toLocaleString("en-US", {
           year: "numeric",
         });
+
         let payment = {
           paymentNumber: i + 1,
           amount: installmentAmount,
@@ -180,6 +204,30 @@ export default class CalculatorForm extends Component {
       console.log("not valid input");
     }
   };
+  getDate(year, month, week, day) {
+    const firstDay = 1;
+    if (week < 0) {
+      month++;
+    }
+    const date = new Date(year, month, week * 7 + firstDay);
+    if (day < date.getDay()) {
+      day += 7;
+    }
+    date.setDate(date.getDate() - date.getDay() + day);
+    return date;
+  }
+  getHoliday(month, week, day) {
+    return holidays[month + "," + week + "," + day];
+  }
+  getDateString(year, month, week, day) {
+    const date = this.getDate(year, month, week, day);
+    const holiday = this.getHoliday(month, week, day);
+    let dateString = date.toLocaleDateString();
+    if (holiday) {
+      dateString += " \xa0\xa0\xa0" + holiday;
+    }
+    return dateString;
+  }
   onChange = (e) => {
     const state = this.state;
     state[e.target.name] = e.target.value;
